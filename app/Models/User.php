@@ -21,15 +21,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'firsName',
+        'firstName',
         'lastName',
-        'email',
-        'password',
+        'account_id',
         'phone',
-        'role',
-        'image',
-        'status'
+        'image'
     ];
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -60,10 +61,6 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function reservedBooks()
-    {
-        return $this->hasManyThrough(book::class, Reservation::class, 'user_id', 'id', 'id', 'book_id');
-    }
 
 
 

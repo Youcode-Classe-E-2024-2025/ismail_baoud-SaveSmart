@@ -24,7 +24,7 @@
                 @csrf
             <div class="mt-20 text-center border-b border-gray-300 pb-12">
                 <div class="flex flex-col items-center space-y-4">
-                <input type="text" name="firsName" value="{{ $user->firsName }}"
+                <input type="text" name="firsName" value="{{ $user->firstName }}"
                        class="w-80 px-4 py-2 border border-gray-300 rounded-lg text-center text-gray-700 text-lg font-medium bg-gray-100"
                        >
                     @error('firsName')

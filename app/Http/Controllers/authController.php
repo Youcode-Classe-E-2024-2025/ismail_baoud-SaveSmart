@@ -2,6 +2,7 @@
 
 namespace  App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -39,9 +40,9 @@ class authController extends Controller{
         $validatedData = $request->validate([
             'firsName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|string|email|max:255|unique:accounts',
+            'password' => 'required|string|min:6',
             'phone' => 'required|string|max:20',
-            'password' => 'required|min:6',
             'image' => 'required|image',
         ]);
 
@@ -52,15 +53,19 @@ class authController extends Controller{
             $imagePath = null;
         }
 
+        Account::create([
+            'name' => 'ait' . ' ' . $validatedData['lastName'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
+        $lastRecord = Account::latest()->first();
 
         User::create([
-            'firsName' => $validatedData['firsName'], // Correction du champ
+            'firstName' => $validatedData['firsName'],
             'lastName' => $validatedData['lastName'],
-            'email' => $validatedData['email'],
+            'account_id' => $lastRecord->id,
             'phone' => $validatedData['phone'] ?? null,
-            'password' => Hash::make($validatedData['password']),
-            'role' => 'user',
-            'image' => $imagePath, // Enregistrer le chemin de l'image
+            'image' => $imagePath,
         ]);
 
         return redirect()->route('signin')->with('success', 'Account created successfully');
@@ -76,14 +81,15 @@ class authController extends Controller{
             'email' => 'required|email',
             'password' => 'required'
         ]);
+        $account = Account::where('email', $request->email)->first();
 
-        if (Auth::attempt($credentials)) {
+
+        if ($account && Hash::check($request->password, $account->password)) {
             $request->session()->regenerate();
 
-            $user = Auth::user();
-            $request->session()->put('user', $user);
-            $request->session()->put('role', $user->role);
-            $request->session()->put('id', $user->id);
+
+            $request->session()->put('user', $account);
+            $request->session()->put('id', $account->id);
             return redirect()->route('home')->with('success', 'Login successful');
         }
 

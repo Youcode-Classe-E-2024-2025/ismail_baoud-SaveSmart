@@ -2,11 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\authController;
-use App\Http\Controllers\bookController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\profileController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\reservationController;
 
 Route::get('/', [dashboardController::class , 'index']);
 Route::get('/signin', [authController::class , 'signin'])
@@ -14,7 +12,7 @@ Route::get('/signin', [authController::class , 'signin'])
 Route::get('/signup', [authController::class , 'signup']);
 Route::get('/dashboard', [dashboardController::class , 'index'])
 ->name('home');
-Route::get('/profile', [profileController::class , 'index'])
+Route::get('/profile/{id}', [profileController::class , 'index'])
 ->name('profile');
 Route::post('/store', [authController::class , 'store'])
     ->name('store');

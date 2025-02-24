@@ -4,33 +4,40 @@
     @if( count($books) >=1 )
 
 
-@foreach($books as $book)
-    <h1 class="flex justify-center text-3xl">Your Book </h1>
-
-    <div class="flex justify-center items-center min-h-screen bg-gray-100">
-        <div class="w-full sm:w-96 bg-white shadow-lg border border-gray-300 p-6">
-            <div class="flex flex-col">
-                <!-- Book Image -->
-                <div class="w-full mb-4">
-                    <img class="w-full h-80 object-cover" src="{{ asset('storage/' . $book->image) }}" alt="book">
-                </div>
-
-                <!-- Book Details -->
-                <div class="text-center">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ $book->title }}</h2>
-                    <h4 class="text-sm font-medium text-gray-600 mb-2">{{ $book->description }}</h4>
-                    <h4 class="text-sm text-gray-500 mb-2">By: <span class="text-gray-800 font-semibold">{{ $book->author }}</span></h4>
-                    <h4 class="text-xl font-semibold text-gray-800">$ {{ $book->price }}</h4>
-                </div>
-
-                <!-- Button -->
-                <div class="mt-6">
-                    <a href="/deleteReservation/{{ $book->id }}" class="block text-center bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 border border-red-800">🚫 return</a>
-                </div>
+        <!-- resources/views/family-account.blade.php -->
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Family Account</title>
+            <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+        </head>
+        <body class="bg-gray-100">
+        <div class="container mx-auto p-6">
+            <h1 class="text-3xl font-bold mb-6">Select a Profile</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Example Profile Cards -->
+                @foreach($profiles as $profile)
+                    <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                        <img src="{{ $profile->avatar }}" alt="{{ $profile->name }}" class="w-24 h-24 rounded-full mx-auto mb-4">
+                        <h2 class="text-xl font-semibold">{{ $profile->name }}</h2>
+                        <a href="{{ route('profile.select', $profile->id) }}" class="mt-4 inline-block bg-blue-500 text-white rounded-lg px-4 py-2">Select</a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-6">
+                <h2 class="text-2xl font-bold mb-4">Add a New Profile</h2>
+                <form action="{{ route('profile.add') }}" method="POST" class="flex flex-col">
+                    @csrf
+                    <input type="text" name="name" placeholder="Profile Name" required class="border border-gray-300 rounded-lg p-2 mb-4">
+                    <input type="url" name="avatar" placeholder="Profile Avatar URL" required class="border border-gray-300 rounded-lg p-2 mb-4">
+                    <button type="submit" class="bg-green-500 text-white rounded-lg px-4 py-2">Add Profile</button>
+                </form>
             </div>
         </div>
-    </div>
-@endforeach
+        </body>
+        </html>
     @else
         <div class="flex justify-center items-center min-h-screen bg-gray-100">
         <p class="flex justify-center text-5xl">you don't have any books</p>

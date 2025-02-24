@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Dto\booksDTO;
+use App\Dto\profilesDTO;
+use App\Models\Account;
 use App\Models\book;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,28 +18,23 @@ class dashboardController extends Controller
      */
 
     public function index(){
-//        $books = book::all()->map(fn($a) =>new booksDTO(
-//            $a->id,
-//            $a->title,
-//            $a->author,
-//            $a->image,
-//            $a->description,
-//            $a->price,
-//            $a->created_at,
-//            $a->status
-//        ));
+        $users = User::all()->map(fn($a) =>new profilesDTO(
+            $a->id,
+            $a->firstName . ' ' . $a->lastName,
+            $a->image,
+            $a->created_at,
+        ))->where('id', session('id'));
 
-        return view('front.home');
+        return view('front.home')->with('profiles', $users);
 
     }
 
     /**
      * @return void
      */
-    public function userDashboard(){
-        $user = User::find(session('id'));
-        $books = $user->reservedBooks;
-        return view('front.dashboard')->with('books', $books);
+    public function userDashboard($id){
+        $id = User::find($id);
+        return view('front.dashboard')->with('id', $id);
     }
 
     /**
