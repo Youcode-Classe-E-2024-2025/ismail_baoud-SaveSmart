@@ -90,7 +90,7 @@ class authController extends Controller{
 
             $request->session()->put('user', $account);
             $request->session()->put('id', $account->id);
-            return redirect()->route('home')->with('success', 'Login successful');
+            return redirect()->route('userDashboard')->with('success', 'Login successful');
         }
 
         return back()->withErrors([
