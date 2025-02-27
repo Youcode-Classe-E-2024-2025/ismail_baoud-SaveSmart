@@ -14,14 +14,16 @@ use Illuminate\Support\Facades\DB;
 /**
  *
  */
-class dashboardController extends Controller
+class DashboardController extends Controller
 {
     /**
      * @return void
      */
 
-    public function index(){
+    public function showHome(){
         $id = session('id');
+
+
 
         //categories
         $categories = Category::all()->where('account_id','=',$id);
@@ -33,7 +35,6 @@ class dashboardController extends Controller
             ->get();
 
 
-//     return $transactions->category->name;
 
         return view('front.home')->with(['categories'=>$categories, 'transactions'=>$transactions]);
 
@@ -43,7 +44,7 @@ class dashboardController extends Controller
     /**
      * @return void
      */
-    public function userDashboard(){
+    public function showUserDashboard(){
 
         session()->forget('user_id');
         $id = session('id');
@@ -54,14 +55,6 @@ class dashboardController extends Controller
             $a->created_at,
         ));
         return view('front.dashboard')->with('profiles', $users);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|object
-     */
-    public function adminDashboard(){
-        $users =   User::all();
-        return view('back.dashboard')->with('users', $users);
     }
 
 }
