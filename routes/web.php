@@ -1,54 +1,45 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\authController;
-use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\profileController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransactionController;
 
-Route::get('/', [dashboardController::class , 'index']);
-Route::get('/signin', [authController::class , 'signin'])
-    ->name('signin');
-Route::get('/signup', [authController::class , 'signup']);
-Route::get('/dashboard', [dashboardController::class , 'index'])
-->name('home');
-Route::get('/profile/{id}', [profileController::class , 'index'])
-->name('profile');
-Route::post('/store', [authController::class , 'store'])
-    ->name('store');
-Route::post('/login/validate', [authController::class , 'loginStore'])
-    ->name('login.validate');
-Route::get('/logout', [authController::class , 'logout'])
-    ->name('logout');
+Route::get('/', [dashboardController::class , 'showHome']);
 
+// authontofocation
 
+Route::get('/login', [authController::class , 'showLoginForm'])->name('showLoginForm');
+Route::post('/login', [authController::class , 'login'])->name('login');
+Route::get('/register', [authController::class , 'showRegisterForm'])->name('showRegisterForm');
+Route::post('/register', [authController::class , 'register'])->name('register');
+Route::get('/logout', [authController::class , 'logout'])->name('logout');
 
-Route::get('/userDashboard', [dashboardController::class , 'userDashboard'])
-    ->name('userDashboard');
+// dashboards
 
-Route::get('/adminDashboard', [dashboardController::class , 'adminDashboard'])
-    ->name('adminDashboard');
+Route::get('/dashboard', [dashboardController::class , 'showHome'])->name('home');
+Route::get('/userDashboard', [dashboardController::class , 'showUserDashboard'])->name('userDashboard');
 
-Route::get('/emprunts', [reservationController::class , 'index'])
-    ->name('emprunts');
+// profile
+Route::get('/profile/{id}', [profileController::class , 'show'])->name('profile');
+Route::post('/addProfile', [profileController::class , 'store'])->name('addProfile');
 
-Route::get('/adminDashboard/create', [bookController::class , 'createBook'])
-    ->name('createbook');
+// user
+Route::get('/deleteUser/{id}', [UserController::class , 'deleteUser'])->name('deleteUser');
+Route::post('/updateUser/{id}', [UserController::class , 'editUser'])->name('editUser');
 
-//Route::get('/adminDashboard/books', [bookController::class , 'getAll'])
-//    ->name('createbook');
+// category
+Route::post('/storeCategory', [CategoryController::class , 'store'])->name('storeCategory');
+Route::get('/api/category-totals/revenu' , [CategoryController::class , 'getCategoryTotalsRevenu'])->name('getCategoryTotalsRevenu');
+Route::get('/api/category-totals/depense' , [CategoryController::class , 'getCategoryTotalsDepense'])->name('getCategoryTotalsDepense');
+Route::get('/destroyCategory/{id}' , [CategoryController::class , 'destroy'])->name('destroyCategory');
 
-Route::get('/adminDashboard/delete/{id}', [bookController::class , 'deletebook'])
-    ->name('deletebook');
+//Transaction
 
-Route::post('/storebook', [bookController::class , 'storebook'])
-    ->name('storebook');
+Route::post('/storeTransactions', [TransactionController::class , 'store'])->name('storeTransactions');
+Route::get('/destroy_trans/{id}' , [TransactionController::class , 'destroy'])->name('destroyTransactions');
+Route::post('/updateTransaction' , [TransactionController::class , 'update'])->name('updateTransaction');
 
-Route::get('/updatebook/{id}', [bookController::class , 'updateBook']);
-Route::post('/updateData/{id}', [bookController::class , 'storeUpdate']);
-
-Route::get('/deleteUser/{id}', [UserController::class , 'deleteUser']);
-
-Route::post('/updateUser/{id}', [UserController::class , 'editUser']);
-Route::get('/reservation/{id}', [reservationController::class , 'store']);
-Route::get('/deleteReservation/{id}', [reservationController::class , 'delete']);
