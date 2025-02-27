@@ -8,7 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
 
-Route::get('/', [dashboardController::class , 'showHome']);
+Route::get('/', [authController::class , 'logout']);
 
 // authontofocation
 
