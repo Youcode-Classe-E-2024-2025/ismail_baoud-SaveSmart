@@ -2,19 +2,12 @@
 
 @section('main')
     <section class="relative min-h-screen">
-        <!-- Full-Screen Video Background -->
-        <div class="absolute inset-0 w-full h-full">
-            <video class="w-full h-full object-cover" autoplay loop muted>
-                <source src="{{ asset('storage/book_video/v1.mp4') }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
 
         <!-- Login Form (Left 50% of Screen) -->
         <div class="absolute right-0 top-13 w-1/2 h-[89%] flex items-center justify-center">
             <div class="w-full h-full flex flex-col justify-center items-center p-8 bg-white/80 backdrop-blur-md shadow-lg">
                 <h1 class="text-2xl font-semibold text-gray-800 text-center">Welcome Back to TechLib</h1>
-                <form method="post" action="{{ route('login.validate') }}" class="grid w-[50%] justify-center grid-cols-1 gap-6 mt-8">
+                <form method="post" action="{{ route('login') }}" class="grid w-[50%] justify-center grid-cols-1 gap-6 mt-8">
                     @csrf
 
                     <div>
@@ -44,7 +37,7 @@
                     </div>
 
                     <button type="submit" class="w-full px-6 py-3 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">Sign in</button>
-                    <p class="text-gray-800 text-sm text-center mt-6">Don't have an account? <a href="/signup" class="text-blue-600 font-semibold hover:underline ml-1">Register here</a></p>
+                    <p class="text-gray-800 text-sm text-center mt-6">Don't have an account? <a href="/register" class="text-blue-600 font-semibold hover:underline ml-1">Register here</a></p>
                 </form>
             </div>
         </div>

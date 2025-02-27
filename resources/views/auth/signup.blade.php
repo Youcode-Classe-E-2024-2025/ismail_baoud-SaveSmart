@@ -2,13 +2,9 @@
 
 @section('main')
     <section class="relative min-h-screen">
-        <!-- Full-Screen Video Background -->
-        <div class="absolute inset-0 w-full h-full">
-            <video class="w-full h-full object-cover" autoplay loop muted>
-                <source src="{{ asset('storage/book_video/v1.mp4') }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+{{--        <div class="absolute inset-0 w-full h-full">--}}
+
+{{--        </div>--}}
 
         <!-- Registration Form (Left 50% of Screen) -->
         <!-- Registration Form (Left 50% of Screen) -->
@@ -16,13 +12,13 @@
             <div class="w-full h-full flex flex-col justify-center   items-center p-8 bg-white/80 backdrop-blur-md shadow-lg">
 
             <h1 class="text-2xl font-semibold text-gray-800 text-center">Create Your Library Account</h1>
-                <form action="/store" method="POST" class="grid w-[50%] justify-center grid-cols-1 gap-6 mt-8" enctype="multipart/form-data">
+                <form action="{{ route('register') }}" method="POST" class="grid w-[50%] justify-center grid-cols-1 gap-6 mt-8" enctype="multipart/form-data">
                     @csrf
 
                     <div>
                         <label class="block mb-2 text-sm text-gray-800" for="firstName">First Name</label>
-                        <input type="text" name="firsName" id="firstName" placeholder="John" class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-[#E8E8E8] border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                        @error('firsName')
+                        <input type="text" name="firstName" id="firstName" placeholder="John" class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-[#E8E8E8] border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                        @error('firstName')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
