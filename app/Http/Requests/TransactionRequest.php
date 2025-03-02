@@ -24,8 +24,9 @@ class TransactionRequest extends FormRequest
         return [
             'amount' => 'required|integer|min:1',
             'description' => 'required',
-            'type' => 'required',
             'category' => 'required',
+            'status' => 'required',
+            'type' => 'required',
         ];
     }
 }
