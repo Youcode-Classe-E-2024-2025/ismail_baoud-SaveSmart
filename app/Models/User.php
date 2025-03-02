@@ -29,7 +29,8 @@ class User extends Authenticatable
         'lastName',
         'account_id',
         'phone',
-        'image'
+        'image',
+        'balance',
     ];
     public function account()
     {
@@ -40,6 +41,10 @@ class User extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function goals(){
+        return $this->hasMany(Goal::class);
     }
 
     /**
