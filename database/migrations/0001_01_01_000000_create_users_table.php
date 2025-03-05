@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('firstName');
             $table->string('lastName');
             $table->integer('account_id');
-//            $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade')->after('lastName');
             $table->string('image')->nullable();
             $table->string('phone');
+            $table->integer('balence')->default(0);
+            $table->integer('saved')->default(0);
             $table->timestamps();
         });
 
