@@ -31,6 +31,7 @@ class User extends Authenticatable
         'phone',
         'image',
         'balance',
+        'saved'
     ];
     public function account()
     {
