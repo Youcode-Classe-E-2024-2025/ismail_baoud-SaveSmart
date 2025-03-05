@@ -20,4 +20,8 @@ class Account extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function goals(){
+        return $this->hasMany(Goal::class);
+    }
 }
