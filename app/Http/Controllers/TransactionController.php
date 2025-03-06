@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Middleware\ThrottleRequests;
+use App\Models\User;
 
 /**
  *
@@ -25,13 +24,21 @@ class TransactionController extends Controller
         Transaction::create([
             'description'=>$validatedData['description'],
             'amount'=>$validatedData['amount'],
-
             'type'=>$validatedData['type'],
+            'status'=>$validatedData['status'],
             'category_id'=>$validatedData['category'],
             'user_id'=>$user_id,
             'account_id'=>$account_id,
         ]);
+        if($request['type'] === 'depense'){
+            User::where('id', $user_id)->decrement('balence', $validatedData['amount']);
 
+        }elseif($request['type'] === 'revenu'){
+            User::where('id', $user_id)->increment('balence', $validatedData['amount']);
+
+        }else{
+            return back();
+        }
 
         return to_route('home');
     }
@@ -42,10 +49,8 @@ class TransactionController extends Controller
     public function update(TransactionRequest $request)
     {
         $validatedData = $request->validated();
-
         $transaction = Transaction::findOrFail($request['transaction_id']);
 
-        $transaction->type = $validatedData['type'];
         $transaction->amount = $validatedData['amount'];
         $transaction->category_id = $request['category'];
         $transaction->description =$validatedData['description'];
