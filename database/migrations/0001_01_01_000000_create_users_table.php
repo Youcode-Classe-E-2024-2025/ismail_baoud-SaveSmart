@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('account_id');
             $table->string('image')->nullable();
             $table->string('phone');
-            $table->integer('balence')->default(0);
             $table->integer('saved')->default(0);
             $table->timestamps();
         });
