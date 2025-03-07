@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- Add Profile Section -->
-                <div class="mt-12 text-center">
+                <div class="mt-12 text-center m-auto">
                     <h2 class="text-2xl font-semibold mb-6 text-slate-700 flex items-center justify-center gap-3">
                         <span class="bg-emerald-50 p-2 rounded-xl text-emerald-500">➕</span>
                         Ajouter un Nouveau Profil
@@ -65,8 +65,8 @@
     </div>
 
     <!-- Modal -->
-    <div id="addProfileModal" class="hidden fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-50">
-        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg p-4">
+    <div id="addProfileModal" class="hidden fixed inset-0 flex justify-center items-center bg-slate-900/20 backdrop-blur-sm z-50">
+        <div class=" w-full max-w-lg p-4">
             <div class="bg-white rounded-3xl p-8 shadow-xl transform transition-all duration-300 opacity-0 scale-95 border border-slate-200" id="modalContent">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-semibold text-slate-700 flex items-center gap-3">

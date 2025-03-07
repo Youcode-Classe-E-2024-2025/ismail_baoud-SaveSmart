@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GoalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -7,8 +8,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
+use \App\Http\Controllers\PdfController;
 
-Route::get('/', [authController::class , 'logout']);
+Route::get('/', [authController::class , 'logout'])->name('logout');
+//goals
+
+
+route::resource('goals', GoalController::class);
 
 // authontofocation
 
@@ -26,6 +32,7 @@ Route::get('/userDashboard', [dashboardController::class , 'showUserDashboard'])
 // profile
 Route::get('/profile/{id}', [profileController::class , 'show'])->name('profile');
 Route::post('/addProfile', [profileController::class , 'store'])->name('addProfile');
+Route::post('/savingStore', [profileController::class , 'savingStore'])->name('savingStore');
 
 // user
 Route::get('/deleteUser/{id}', [UserController::class , 'deleteUser'])->name('deleteUser');
@@ -43,3 +50,6 @@ Route::post('/storeTransactions', [TransactionController::class , 'store'])->nam
 Route::get('/destroy_trans/{id}' , [TransactionController::class , 'destroy'])->name('destroyTransactions');
 Route::post('/updateTransaction' , [TransactionController::class , 'update'])->name('updateTransaction');
 
+//pdf
+
+route::get('/pdf', [PdfController::class , 'generateStatisticsPdf'])->name('generateStatisticsPdf');
