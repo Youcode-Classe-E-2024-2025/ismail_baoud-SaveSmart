@@ -9,6 +9,7 @@ class Transaction extends Model
     protected $fillable = [
         'description',
         'type',
+        'status',
         'user_id',
         'amount',
         'account_id',
@@ -23,6 +24,7 @@ use SoftDeletes;
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
 
     public function user()
     {
