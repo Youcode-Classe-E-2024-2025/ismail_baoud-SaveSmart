@@ -1,16 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Dto\booksDTO;
 use App\Dto\profilesDTO;
 use App\Models\Account;
-use App\Models\book;
 use App\Models\Category;
+use App\Models\Goal;
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use function Laravel\Prompts\select;
+use carbon\carbon;
 
 /**
  *
@@ -20,19 +17,19 @@ class DashboardController extends Controller
 
     public function showHome(){
         $id = session('id');
-        $user_id = session('user_id');
+        $user_id = session('id');
 
-        $totalRevenu = Transaction::where('user_id', $user_id)
+        $totalRevenu = Transaction::where('account_id', $user_id)
             ->where('type', 'revenu')
             ->sum('amount');
-        $totalDepense = Transaction::where('user_id', $user_id)
+        $totalDepense = Transaction::where('account_id', $user_id)
             ->where('type', 'depense')
             ->sum('amount');
-        $totalFix= Transaction::where('user_id', $user_id)
+        $totalFix= Transaction::where('account_id', $user_id)
             ->where('type', 'depense')
             ->where('status', 'fix')
             ->sum('amount');
-        $totalVariable = Transaction::where('user_id', $user_id)
+        $totalVariable = Transaction::where('account_id', $user_id)
             ->where('type', 'depense')
             ->where('status', 'variable')
             ->sum('amount');
@@ -44,11 +41,10 @@ class DashboardController extends Controller
             ->where('account_id', $id)
             ->whereNull('deleted_at')
             ->get();
-        $balance = User::where('id', session('user_id'))->first()->balence;
+
+        $balance = Account::where('id', session('id'))->first()->balence;
         $algorithm = $this->obtimisation_algorithm($totalRevenu);
         $algorithm2 = $this->obtimisation_algorithm2($totalRevenu ,$totalFix,$totalVariable);
-
-        $optimizedBudget = $this->budget_optimization($totalRevenu, $totalFix, $totalVariable);
 
         return view('front.home', [
             'categories' => $categories,
@@ -58,7 +54,6 @@ class DashboardController extends Controller
             'balence' => $balance,
             'algorithm' => $algorithm,
             'algorithm2' => $algorithm2,
-            'optimizedBudget' => $optimizedBudget,
         ]);
 
     }
@@ -108,26 +103,6 @@ class DashboardController extends Controller
         ];
     }
 
-    public function budget_optimization($revenu, $depense_fix, $depense_variable)
-    {
-        $remainingBalance = $revenu - ($depense_fix + $depense_variable);
 
-        $optimizedExpenses = [
-            'fixed_expenses' => $depense_fix,
-            'variable_expenses' => $depense_variable,
-        ];
 
-        if ($remainingBalance < 0) {
-            $optimizedExpenses['variable_expenses'] = $depense_variable + $remainingBalance;
-            $remainingBalance = 0;
-        }
-
-        $optimizedExpenses['variable_expenses'] = max(0, $optimizedExpenses['variable_expenses']);
-        $optimizedExpenses['fixed_expenses'] = max(0, $optimizedExpenses['fixed_expenses']);
-
-        return [
-            'remaining_balance' => $remainingBalance,
-            'optimized_expenses' => $optimizedExpenses
-        ];
-    }
 }
