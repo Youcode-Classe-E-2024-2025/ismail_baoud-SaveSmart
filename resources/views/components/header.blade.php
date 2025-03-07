@@ -10,7 +10,8 @@
                     @if(session()->has('user'))
                         @if(session()->has('user_id'))
                         <a href="/profile/{{session('user_id')}}" class="text-white px-3 py-2 rounded-md text-md font-medium hover:bg-gray-700">Profile</a>
-                        <a href="{{ route('home') }}" class="text-white px-3 py-2 rounded-md text-md font-medium hover:bg-gray-700">Home</a>
+                            <a href="{{ route('home') }}" class="text-white px-3 py-2 rounded-md text-md font-medium hover:bg-gray-700">Home</a>
+                        <a href="{{ route('goals.index') }}" class="text-white px-3 py-2 rounded-md text-md font-medium hover:bg-gray-700">Goals</a>
                         <a href="/userDashboard" class="text-white px-3 py-2 rounded-md text-md font-medium hover:bg-gray-700">All profiles</a>
                         <a href="/logout" class="text-white px-3 py-2 rounded-md text-md font-medium hover:bg-red-600">Logout</a>
                         @else
@@ -41,9 +42,5 @@
             <a href="/register" class="block text-white px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Sign Up</a>
         </div>
     </div>
-    <script>
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-    </script>
+
 </nav>
