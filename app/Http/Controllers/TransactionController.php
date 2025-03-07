@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionRequest;
+use App\Models\Account;
 use App\Models\Transaction;
 use App\Models\User;
 
@@ -31,10 +32,10 @@ class TransactionController extends Controller
             'account_id'=>$account_id,
         ]);
         if($request['type'] === 'depense'){
-            User::where('id', $user_id)->decrement('balence', $validatedData['amount']);
+            Account::where('id', $account_id)->decrement('balence', $validatedData['amount']);
 
         }elseif($request['type'] === 'revenu'){
-            User::where('id', $user_id)->increment('balence', $validatedData['amount']);
+            Account::where('id', $account_id)->increment('balence', $validatedData['amount']);
 
         }else{
             return back();
