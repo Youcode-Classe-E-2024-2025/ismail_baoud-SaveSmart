@@ -64,9 +64,5 @@ Exécuter les tests unitaires et fonctionnels avec :
 ```bash
 php artisan test
 ```
+![image](https://github.com/user-attachments/assets/e744eb10-af76-4728-9568-175d9c4c1991)
 
-## Contribution
-Les contributions sont les bienvenues ! Merci de forker le projet et de proposer vos améliorations via des pull requests.
-
-## Licence
-Ce projet est sous licence MIT.
